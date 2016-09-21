@@ -1,9 +1,14 @@
-
-
 #! /bin/sh
-cd /path
 
-for i in {1..14}
+URL_TO_REPOSITORY=$1
+LOCAL_PATH_TO_REPOSITORY=$2
+DAY_TO_GREEN=$3
+USER_NAME=$4
+USER_PASSWORD=$5
+
+cd ${PATH_TO_REPOSITORY}
+
+for i in {0..${DAY_TO_GREEN}}
 do
 
 day=`date -v-1d +%d`
@@ -12,16 +17,14 @@ year=`date -v-1d +%Y`
 
 date ${month}${day}0000${year}.01
 
-f_name="$(date +%Y-%m-%d:%H:%M:%S).txt"
+file_name="$(date +%Y-%m-%d:%H:%M:%S).txt"
 
-echo ${f_name}
+touch ${file_name}
 
-touch ${f_name}
+git add ${file_name}
 
-git add ${f_name}
+git commit -m ${file_name}
 
-git commit -m ${f_name}
-
-git push https://u:p@github.com/user/repo.git
+git push https://${USER_NAME}:${USER_PASSWORD}@${URL_TO_REPOSITORY}
 
 done
